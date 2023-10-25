@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/graphs.dir/src/graphs.cpp.o CMakeFiles/graphs.dir/src/graphs_main.cpp.o -o graphs  -Wl,-rpath,/usr/local/lib /usr/local/lib/libscip.so.8.0.4.0 

@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/queens.dir/src/graphs.cpp.o CMakeFiles/queens.dir/src/graphs_main.cpp.o CMakeFiles/queens.dir/src/cons_nonlinear.c.o -o queens  /usr/lib/libscip.so.8.0.4.0 

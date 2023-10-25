@@ -1,0 +1,3 @@
+/home/anthony/scipoptsuite-8.0.4/GraphsProject/CMakeFiles/graphs.dir
+/home/anthony/scipoptsuite-8.0.4/GraphsProject/CMakeFiles/edit_cache.dir
+/home/anthony/scipoptsuite-8.0.4/GraphsProject/CMakeFiles/rebuild_cache.dir

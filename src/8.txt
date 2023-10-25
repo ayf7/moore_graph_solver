@@ -1,0 +1,41 @@
+./graphs 8
+Graph Solver
+presolving:
+(round 1, fast)       3118 del vars, 4086 del conss, 0 add conss, 1234 chg bounds, 0 chg sides, 0 chg coeffs, 294 upgd conss, 0 impls, 21 clqs
+(round 2, fast)       3735 del vars, 4102 del conss, 0 add conss, 1242 chg bounds, 0 chg sides, 0 chg coeffs, 588 upgd conss, 0 impls, 147 clqs
+(round 3, exhaustive) 3735 del vars, 4417 del conss, 0 add conss, 1242 chg bounds, 0 chg sides, 0 chg coeffs, 588 upgd conss, 0 impls, 294 clqs
+(round 4, exhaustive) 3735 del vars, 4417 del conss, 0 add conss, 1242 chg bounds, 0 chg sides, 0 chg coeffs, 882 upgd conss, 0 impls, 294 clqs
+(round 5, exhaustive) 3735 del vars, 4711 del conss, 22050 add conss, 1242 chg bounds, 0 chg sides, 4410 chg coeffs, 1764 upgd conss, 0 impls, 294 clqs
+(round 6, exhaustive) 3735 del vars, 4711 del conss, 22050 add conss, 1242 chg bounds, 0 chg sides, 4410 chg coeffs, 2646 upgd conss, 0 impls, 45276 clqs
+   (5.4s) probing: 1000/22540 (4.4%) - 0 fixings, 0 aggregations, 2705403 implications, 0 bound changes
+   (5.4s) probing: 1001/22540 (4.4%) - 0 fixings, 0 aggregations, 2709072 implications, 0 bound changes
+   (5.4s) probing aborted: 1000/1000 successive useless probings
+   (5.4s) symmetry computation started: requiring (bin +, int -, cont +), (fixed: bin -, int +, cont -)
+   (5.6s) symmetry computation finished: 7 generators found (max: 1500, log10 of symmetry group size: 7.7)
+(round 7, exhaustive) 3735 del vars, 4711 del conss, 44100 add conss, 1242 chg bounds, 0 chg sides, 4410 chg coeffs, 2646 upgd conss, 0 impls, 264239 clqs
+(round 8, exhaustive) 3735 del vars, 4711 del conss, 44100 add conss, 1242 chg bounds, 0 chg sides, 4410 chg coeffs, 24696 upgd conss, 0 impls, 264239 clqs
+presolving (9 rounds: 9 fast, 7 medium, 7 exhaustive):
+ 3735 deleted vars, 4711 deleted constraints, 44100 added constraints, 1242 tightened bounds, 0 added holes, 0 changed sides, 4410 changed coefficients
+ 0 implications, 264239 cliques
+presolved problem has 22540 variables (490 bin, 0 int, 22050 impl, 0 cont) and 45325 constraints
+  23226 constraints of type <setppc>
+  22050 constraints of type <and>
+     49 constraints of type <linear>
+transformed objective value is always integral (scale: 1)
+Presolving Time: 9.13
+
+ time | node  | left  |LP iter|LP it/n|mem/heur|mdpt |vars |cons |rows |cuts |sepa|confs|strbr|  dualbound   | primalbound  |  gap   | compl. 
+ 20.6s|     1 |     0 | 14422 |     - |   641M |   0 |  22k|  45k|  45k|   0 |  0 |  42 |   0 | 5.200000e+02 |      --      |    Inf | unknown
+ 63.8s|     1 |     0 | 53995 |     - |   660M |   0 |  22k|  23k|  38k| 336 |  1 |  71 |   0 | 5.200000e+02 |      --      |    Inf | unknown
+ 64.1s|     1 |     0 | 53996 |     - |   672M |   0 |  22k|  23k|  38k| 700 |  2 |  74 |   0 |    cutoff    |      --      |   0.00%| unknown
+ 64.1s|     1 |     0 | 53996 |     - |   672M |   0 |  22k|  23k|  38k| 700 |  2 |  74 |   0 |    cutoff    |      --      |   0.00%| unknown
+
+SCIP Status        : problem is solved [infeasible]
+Solving Time (sec) : 64.06
+Solving Nodes      : 1
+Primal Bound       : +1.00000000000000e+20 (0 solutions)
+Dual Bound         : +1.00000000000000e+20
+Gap                : 0.00 %
+solution for 8-regular graph with 65 nodes:
+
+no solution found

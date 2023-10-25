@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/queens.dir/src/queens.cpp.o CMakeFiles/queens.dir/src/queens_main.cpp.o -o queens  /usr/lib/libscip.so.8.0.4.0 

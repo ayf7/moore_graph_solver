@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wno-psabi -O3 -DNDEBUG -rdynamic CMakeFiles/queens.dir/src/queens.cpp.o CMakeFiles/queens.dir/src/queens_main.cpp.o -o ../../../bin/examples/queens  -Wl,-rpath,/home/anthony/scipoptsuite-8.0.4/lib ../../../lib/libscip.so.8.0.4.0 
