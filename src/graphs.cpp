@@ -225,25 +225,24 @@ GraphSolver::GraphSolver(size_t d, size_t n) : scip(0), d(d), n(n), vars(n, vect
       }
    }
 
-   // Experimental: connection between block 2/3
-   SCIP_CONS * con5;
-   namebuf.str("");
-   namebuf<<"branch4_2";
-   SCIP_CALL_EXC(SCIPcreateConsLinear(scip, & con5, namebuf.str().c_str(), 0, NULL, NULL, 1.0, 1.0,
-            TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE));
-   SCIP_CALL_EXC( SCIPaddCoefLinear(scip, con5, vars[14][22], 1.0) );
-   SCIP_CALL_EXC( SCIPaddCons(scip, con5) );
-   cons.push_back(con5);
 
-   SCIP_CONS * con6;
-   namebuf.str("");
-   namebuf<<"branch4_1";
-   SCIP_CALL_EXC(SCIPcreateConsLinear(scip, & con6, namebuf.str().c_str(), 0, NULL, NULL, 1.0, 1.0,
-            TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE));
-   SCIP_CALL_EXC( SCIPaddCoefLinear(scip, con6, vars[15][23], 1.0) );
-   SCIP_CALL_EXC( SCIPaddCons(scip, con6) );
-   cons.push_back(con6);
+   // EXPERIMENTAL: Block B_23 set to a flipped version of I.
+   for (size_t x = 0; x < d - 1; x++) {
+      int i = 2*d;
+      int j = 3*d - 2 + d - 1;
+      SCIP_CONS * con;
+      namebuf.str("");
+      cout<<i + x<<","<<j - x<<endl;
+      namebuf<<"exp_"<<i<<"_"<<j;
+      SCIP_CALL_EXC(SCIPcreateConsLinear(scip, & con, namebuf.str().c_str(), 0, NULL, NULL, 1.0, 1.0,
+                     TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE));
+      SCIP_CALL_EXC( SCIPaddCoefLinear(scip, con, vars[i + x][j - x], 1.0) );   
+      SCIP_CALL_EXC( SCIPaddCons(scip, con) );
+      cons.push_back(con);
+   }
 
+
+   
    // Blocks i, j: for blocks i, j >= 2 with i =/= j: 1 in each row and column, and symmetrical within this block
    for (size_t i = 2*d; i < n; i += d - 1) {
       for (size_t j = i + d - 1; j < n; j += d - 1) { // consider blocks i and j, where j > i
@@ -260,13 +259,30 @@ GraphSolver::GraphSolver(size_t d, size_t n) : scip(0), d(d), n(n), vars(n, vect
          }
          SCIP_CALL_EXC( SCIPaddCons(scip, con) );
          cons.push_back(con);
+         
+         
+         // each diagonal = 0
+         for (size_t dj = 0; dj < d - 1; ++dj) {
+            SCIP_CONS * con2;
+            namebuf.str("");
+            namebuf<<"blocks_diag_"<<i<<"_"<<j<<"."<<dj;
 
+            SCIP_CALL_EXC( SCIPcreateConsLinear(scip, & con2, namebuf.str().c_str(), 0, NULL, NULL, 0.0, 0.0,
+                     TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE) );
+            
+            SCIP_CALL_EXC( SCIPaddCoefLinear(scip, con2, vars[i + dj][j + dj], 1.0) );
+
+            SCIP_CALL_EXC( SCIPaddCons(scip, con2) );
+            cons.push_back(con2);
+         }
+
+         // THIS IS NOT DETERMINED TO BE TRUE
          // entries in each i, j block are symmetric
          for ( size_t di = 0; di < d - 1; ++di ) {
             for (size_t dj = 0; dj < d - 1; ++dj) {
                SCIP_CONS * con2;
                namebuf.str("");
-               namebuf<<"sym_"<<i<<j;
+               namebuf<<"block_sym_"<<i<<j;
                SCIP_CALL_EXC( SCIPcreateConsLinear(scip, & con2, namebuf.str().c_str(), 0, NULL, NULL, 0.0, 0.0,
                   TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE) );
                
@@ -279,7 +295,24 @@ GraphSolver::GraphSolver(size_t d, size_t n) : scip(0), d(d), n(n), vars(n, vect
       }
    }
 
-   // TODO: Sum of entries in each Block_ij = 1
+   // Sum of entries in each Block_ij = 1
+   for (size_t di = 0; di < d - 1; di++) {
+      for (size_t dj = 0; dj < d - 1; dj++) {
+         
+         for (size_t i = 2*d; i < n; i += d - 1) {
+            SCIP_CONS * con;
+            namebuf.str("");
+            namebuf<<"blockJ_"<<i<<"__"<<di<<"/"<<dj;
+            SCIP_CALL_EXC(SCIPcreateConsLinear(scip, & con, namebuf.str().c_str(), 0, NULL, NULL, 1.0, 1.0,
+                           TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE));
+            for (size_t j = d + 1; j < n; j += d - 1) {
+                  SCIP_CALL_EXC( SCIPaddCoefLinear(scip, con, vars[i + di][j + dj], 1.0) );    
+            }
+            SCIP_CALL_EXC( SCIPaddCons(scip, con) );
+            cons.push_back(con);
+         }
+      }
+   }
 }
 void GraphSolver::disp(std::ostream& out) {
  // get the best found solution from scip
